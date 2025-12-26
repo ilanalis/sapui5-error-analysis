@@ -59,7 +59,8 @@
 								path: 'ProductName',
 								descending: false
 							}
-						}">
+						}"
+						selectionChange="onTableSelectionChange">
 					<headerToolbar>
 						<Toolbar>
 							<Title
@@ -134,10 +135,10 @@
 			<semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
 		</semantic:sendEmailAction>
 		<semantic:positiveAction>
-			<semantic:PositiveAction text="{i18n>TableProductsReorder}" press=".onUpdateStockObjects"/>
+			<semantic:PositiveAction text="{i18n>TableProductsReorder}" press=".onUpdateStockObjects" enabled="{worklistView>/isOrderRemoveEnabled}"/>
 		</semantic:positiveAction>
 		<semantic:negativeAction>
-			<semantic:NegativeAction text="{i18n>TablePorductsUnlist}" press=".onUnlistObjects"/>
+			<semantic:NegativeAction text="{i18n>TablePorductsUnlist}" press=".onUnlistObjects" enabled="{worklistView>/isOrderRemoveEnabled}"/>
 		</semantic:negativeAction>
 	</semantic:SemanticPage>
 </mvc:View>
