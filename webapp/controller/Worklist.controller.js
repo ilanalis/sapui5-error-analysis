@@ -324,12 +324,7 @@ sap.ui.define(
             var currentStock = Number(
               this.getModel().getProperty(`${sPath}/UnitsInStock`)
             );
-            // this.getModel().setProperty(
-            //   `${sPath}/UnitsInStock`,
-            //   currentStock + stockIncrement
-            // );
             var newStock = currentStock + stockIncrement;
-
             this.getModel().update(
               sPath,
               { UnitsInStock: newStock },
