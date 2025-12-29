@@ -314,6 +314,7 @@ sap.ui.define(
       onUpdateStockObjects: function () {
         var aSelectedProducts, i, sPath, oProductObject;
         aSelectedProducts = this.byId("table").getSelectedItems();
+        var stockIncrement = 5;
         if (aSelectedProducts.length > 0) {
           for (i = 0; i < aSelectedProducts.length; i++) {
             sPath = aSelectedProducts[i].getBindingContext().getPath();
@@ -323,26 +324,32 @@ sap.ui.define(
             var currentStock = Number(
               this.getModel().getProperty(`${sPath}/UnitsInStock`)
             );
-            this.getModel().setProperty(
-              `${sPath}/UnitsInStock`,
-              `${currentStock + 5}`
+            // this.getModel().setProperty(
+            //   `${sPath}/UnitsInStock`,
+            //   currentStock + stockIncrement
+            // );
+            var newStock = currentStock + stockIncrement;
+
+            this.getModel().update(
+              sPath,
+              { UnitsInStock: newStock },
+              {
+                success: this._handleReorderActionResult.bind(
+                  this,
+                  oProductObject.ProductID,
+                  true,
+                  i + 1,
+                  aSelectedProducts.length
+                ),
+                error: this._handleReorderActionResult.bind(
+                  this,
+                  oProductObject.ProductID,
+                  false,
+                  i + 1,
+                  aSelectedProducts.length
+                ),
+              }
             );
-            this.getModel().update(sPath, {
-              success: this._handleReorderActionResult.bind(
-                this,
-                oProductObject.ProductID,
-                true,
-                i + 1,
-                aSelectedProducts.length
-              ),
-              error: this._handleReorderActionResult.bind(
-                this,
-                oProductObject.ProductID,
-                false,
-                i + 1,
-                aSelectedProducts.length
-              ),
-            });
           }
         } else {
           this._showErrorMessage(
